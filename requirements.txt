@@ -1,0 +1,17 @@
+Crystal Core : user_id	email	name	Phone 	is_active	created_at	updated_at	last_login_at	Password
+
+it is kinda universal serial authentication that will be worked to reduce the dependence to create multiple 
+accounts with multiple system that one users when create accoount in crystal core they can get access to 
+procurements and warehouse management system and other systems 
+
+the crystal core will only have access control mode means users will get access of the system based on the roles like developer 
+will have all kind of access of the system but supervisor and manager and security and admin will get specific access 
+
+also dev will approves the system access to users and their emails
+
+
+
+
+2.0:
+ everytime some user login into crystal core then dont have to login into other systems like wms or procurements system etc 
+ i mean they will have only one auth which is crystal core and they will login through crystal core and have access of specific role they have approved by dev
