@@ -6,7 +6,11 @@ import { canApproveUsers } from "@/lib/rbac";
 import { SYSTEM_DISPLAY_NAMES, getSystemUrl } from "@/lib/system-urls";
 import LogoutButton from "./LogoutButton";
 
-export default async function Dashboard() {
+export default async function Dashboard({
+  searchParams,
+}: {
+  searchParams: { error?: string; system?: string };
+}) {
   const token = cookies().get(COOKIE_NAME)?.value;
   const session = token ? await verifyJwt(token) : null;
   if (!session) redirect("/login?next=/dashboard");
@@ -27,6 +31,12 @@ export default async function Dashboard() {
           <LogoutButton />
         </header>
 
+        {searchParams.error === "no_access" && searchParams.system && (
+          <div className="alert-error mt-6">
+            You don&apos;t have access to <strong>{searchParams.system}</strong>. Ask a developer to grant it.
+          </div>
+        )}
+
         <section className="mt-8 card p-6">
           <h2 className="font-semibold text-slate-800">Your systems</h2>
 
@@ -43,14 +53,14 @@ export default async function Dashboard() {
                   return (
                     <li key={s}>
                       <a
-                        href={url}
-                        target="_blank"
-                        rel="noopener noreferrer"
+                        href={`/api/sso/launch?system=${s}`}
                         className="block rounded-md border border-slate-200 px-4 py-3 text-sm
                                    hover:border-crystal-600 hover:bg-crystal-50 transition"
                       >
                         <div className="font-medium text-slate-900">Open {label}</div>
-                        <div className="text-xs text-slate-500 mt-0.5">{url}</div>
+                        <div className="text-xs text-slate-500 mt-0.5">
+                          Sign in automatically · {url}
+                        </div>
                       </a>
                     </li>
                   );

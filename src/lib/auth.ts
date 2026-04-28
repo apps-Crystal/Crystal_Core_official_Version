@@ -23,12 +23,15 @@ const JWT_SECRET = new TextEncoder().encode(
 export const COOKIE_NAME = "crystal_core_session";
 export const TOKEN_EXPIRY = process.env.JWT_EXPIRY || "8h";
 
-export async function signJwt(user: SessionUser): Promise<string> {
-  return new SignJWT({ ...user } as unknown as JWTPayload)
+export async function signJwt(
+  user: SessionUser,
+  opts: { expiresIn?: string; purpose?: "session" | "launch" } = {},
+): Promise<string> {
+  return new SignJWT({ ...user, purpose: opts.purpose ?? "session" } as unknown as JWTPayload)
     .setProtectedHeader({ alg: "HS256" })
     .setIssuedAt()
     .setSubject(user.userId)
-    .setExpirationTime(TOKEN_EXPIRY)
+    .setExpirationTime(opts.expiresIn ?? TOKEN_EXPIRY)
     .sign(JWT_SECRET);
 }
 
