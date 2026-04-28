@@ -3,6 +3,7 @@
 import { useState, FormEvent, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
+import PasswordInput from "@/components/PasswordInput";
 
 function LoginForm() {
   const router = useRouter();
@@ -59,8 +60,8 @@ function LoginForm() {
           </div>
           <div>
             <label className="label" htmlFor="password">Password</label>
-            <input id="password" type="password" required value={password}
-              onChange={(e) => setPassword(e.target.value)} className="input" autoComplete="current-password" />
+            <PasswordInput id="password" required value={password}
+              onChange={(e) => setPassword(e.target.value)} autoComplete="current-password" />
           </div>
           <button type="submit" disabled={loading} className="btn-primary w-full">
             {loading ? "Signing in…" : "Sign in"}

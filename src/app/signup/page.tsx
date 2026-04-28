@@ -2,6 +2,7 @@
 
 import { useState, FormEvent } from "react";
 import Link from "next/link";
+import PasswordInput from "@/components/PasswordInput";
 
 export default function SignupPage() {
   const [form, setForm] = useState({ name: "", email: "", phone: "", password: "" });
@@ -65,8 +66,8 @@ export default function SignupPage() {
           </div>
           <div>
             <label className="label" htmlFor="password">Password (min 8 chars)</label>
-            <input id="password" type="password" required minLength={8} value={form.password}
-              onChange={(e) => update("password", e.target.value)} className="input" autoComplete="new-password" />
+            <PasswordInput id="password" required minLength={8} value={form.password}
+              onChange={(e) => update("password", e.target.value)} autoComplete="new-password" />
           </div>
           <button type="submit" disabled={loading} className="btn-primary w-full">
             {loading ? "Creating account…" : "Create account"}
